@@ -62,12 +62,32 @@ docker compose up -d
 ### 6. Uptime Kuma
 - Port: 3001
 - Description: Self-hosted monitoring tool
-- Usage: Access `http://localhost:3001` to set up monitoring
+- Initial Setup:
+  1. Access `http://localhost:3001`
+  2. Create your admin account on first launch
+  3. Add monitors for each service:
+     - Whoami: `http://localhost:8082`
+     - Ollama: `http://localhost:11434/api/health`
+     - Open WebUI: `http://localhost:3000/health`
+     - TTS: `https://localhost:8050/health`
+     - STT: `https://localhost:8060/health`
+     - Translation: `https://localhost:8070/health`
+  4. Configure monitoring intervals (recommended: 30s)
+  5. Set up notifications if desired
 - Features:
   - Automatic container discovery via Docker socket
   - Health check monitoring for all services
   - Customizable monitoring intervals
   - Real-time alerts and notifications
+  - Telemetry disabled by default
+  - Frame embedding enabled for dashboard integration
+
+### 7. Whoami Service
+- Port: 8082
+- Description: Simple test service that displays container information
+- Usage: Access `http://localhost:8082` to see container details
+- Purpose: Quick testing of Uptime-Kuma monitoring
+- Monitoring: Health checks at root endpoint (/)
 
 ## Directory Structure
 ```
@@ -85,7 +105,9 @@ docker compose up -d
 │   │   └── compose.yaml
 │   ├── translate-service-stack/
 │   │   └── compose.yaml
-│   └── uptime-kuma-stack/
+│   ├── uptime-kuma-stack/
+│   │   └── compose.yaml
+│   └── whoami-stack/     # Test service for monitoring
 │       └── compose.yaml
 └── data/                  # Dockge data directory
 ```
@@ -110,9 +132,17 @@ All services are automatically monitored by Uptime-Kuma using Docker labels:
 - Health checks are configured for each service
 - Default monitoring interval: 30 seconds
 - Retry interval: 10 seconds
-- Access the Uptime-Kuma dashboard at `http://localhost:3001` to view service status
+- Access the Uptime-Kuma dashboard at `http://localhost:3001`
+- Initial setup required (see Uptime Kuma section above)
+- Features enabled:
+  - Docker container discovery
+  - Automatic health check monitoring
+  - Dashboard embedding support
+  - Telemetry disabled
+- Quick testing available via whoami service
 
 ## Security Notes
-- Change default passwords before deploying to production
+- Set strong passwords during initial service setup
 - Review and adjust port mappings based on your needs
 - Consider using Docker networks for inter-container communication
+- Monitor system resources and adjust GPU allocations as needed

@@ -1,40 +1,28 @@
-version: "3.8"
+version: '3.8'
+
 services:
   translate-api:
     image: ghcr.io/bmv234/translate-api-server:latest
     restart: unless-stopped
     ports:
-      - 8070:8000 # External port 8070 mapped to internal port 8000
+      - "8070:8000"  # External port 8070 mapped to internal port 8000
     volumes:
-      - translate_models:/app/models # Persist downloaded models
-      - translate_cache:/app/cache # Cache directory for translations
-    environment: []
+      - translate_models:/app/models  # Persist downloaded models
+      - translate_cache:/app/cache    # Cache directory for translations
     deploy:
       resources:
         reservations:
           devices:
             - driver: nvidia
               count: 1
-              capabilities:
-                - gpu
-    networks:
-      - monitoring
+              capabilities: [gpu]
     labels:
-      - dockge.description=Translation API Server
-      - dockge.icon=globe
-      - dockge.note=GPU-accelerated Translation service
-      - uptime-kuma.monitor=true
-      - uptime-kuma.monitor.name=Translation Service
-      - uptime-kuma.monitor.type=http
-      - uptime-kuma.monitor.url=http://translate-api:8000/health
-      - uptime-kuma.monitor.interval=30
-      - uptime-kuma.monitor.retryInterval=10
+      - "dockge.description=Translation API Server"
+      - "dockge.icon=globe"
+      - "dockge.note=GPU-accelerated Translation service"
+
 volumes:
   translate_models:
     name: translate-models
   translate_cache:
     name: translate-cache
-networks:
-  monitoring:
-    name: monitoring
-    external: true

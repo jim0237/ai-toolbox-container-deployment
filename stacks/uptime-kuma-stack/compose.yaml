@@ -7,15 +7,17 @@ services:
     ports:
       - "3001:3001"
     volumes:
-      - ./uptime-kuma-data:/app/data
+      - uptime_kuma_data:/app/data
       - /var/run/docker.sock:/var/run/docker.sock:ro  # For Docker discovery
-    networks:
-      - monitoring
+    environment:
+      - UPTIME_KUMA_DISABLE_FRAME_SAMEORIGIN=true  # Allow iframe embedding
+      - DISABLE_TELEMETRY=true  # Disable telemetry
+    network_mode: host  # Allow access to localhost endpoints
     labels:
       - "dockge.description=Uptime Kuma - A fancy self-hosted monitoring tool"
       - "dockge.icon=activity"
+      - "dockge.note=Setup required through web UI"
 
-networks:
-  monitoring:
-    name: monitoring
-    driver: bridge
+volumes:
+  uptime_kuma_data:
+    name: uptime-kuma

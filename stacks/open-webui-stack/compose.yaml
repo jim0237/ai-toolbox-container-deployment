@@ -10,24 +10,11 @@ services:
       - open_webui_data:/app/backend/data
     environment:
       - OLLAMA_BASE_URL=http://localhost:11434
-    networks:
-      - monitoring
     labels:
       - "dockge.description=Open WebUI - Web interface for Ollama"
       - "dockge.icon=layout-dashboard"
       - "dockge.note=Requires Ollama service to be running"
-      - "uptime-kuma.monitor=true"
-      - "uptime-kuma.monitor.name=Open WebUI"
-      - "uptime-kuma.monitor.type=http"
-      - "uptime-kuma.monitor.url=http://open-webui:8080/health"
-      - "uptime-kuma.monitor.interval=30"
-      - "uptime-kuma.monitor.retryInterval=10"
 
 volumes:
   open_webui_data:
     name: open-webui
-
-networks:
-  monitoring:
-    name: monitoring
-    external: true

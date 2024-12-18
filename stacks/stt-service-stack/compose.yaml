@@ -16,26 +16,13 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
-    networks:
-      - monitoring
     labels:
       - "dockge.description=Speech-to-Text API Server"
       - "dockge.icon=headphones"
       - "dockge.note=GPU-accelerated STT service"
-      - "uptime-kuma.monitor=true"
-      - "uptime-kuma.monitor.name=STT Service"
-      - "uptime-kuma.monitor.type=http"
-      - "uptime-kuma.monitor.url=http://stt-api:8000/health"
-      - "uptime-kuma.monitor.interval=30"
-      - "uptime-kuma.monitor.retryInterval=10"
 
 volumes:
   stt_models:
     name: stt-models
   stt_cache:
     name: stt-cache
-
-networks:
-  monitoring:
-    name: monitoring
-    external: true

@@ -18,8 +18,3 @@ services:
       - "uptime-kuma.monitor.url=http://whoami:80"
       - "uptime-kuma.monitor.interval=30"
       - "uptime-kuma.monitor.retryInterval=10"
-
-networks:
-  monitoring:
-    name: monitoring
-    external: true

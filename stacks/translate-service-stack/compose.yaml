@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  translate-api:
+    image: ghcr.io/bmv234/translate-api-server:latest
+    restart: unless-stopped
+    ports:
+      - "8070:8070"  # Default port for Translation API
+    volumes:
+      - translate_models:/app/models  # Persist downloaded models
+      - translate_cache:/app/cache    # Cache directory for translations
+    environment:
+      - CUDA_VISIBLE_DEVICES=0  # Enable GPU if available
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    labels:
+      - "dockge.description=Translation API Server"
+      - "dockge.icon=globe"
+      - "dockge.note=GPU-accelerated Translation service"
+
+volumes:
+  translate_models:
+    name: translate-models
+  translate_cache:
+    name: translate-cache

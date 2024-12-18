@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  ollama:
+    image: ollama/ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    labels:
+      - "dockge.description=Ollama - Run AI models locally"
+      - "dockge.icon=cpu"
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:cuda
+    restart: unless-stopped
+    ports:
+      - "3000:8080"
+    volumes:
+      - open_webui_data:/app/backend/data
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+    depends_on:
+      - ollama
+    labels:
+      - "dockge.description=Open WebUI - Web interface for Ollama"
+      - "dockge.icon=layout-dashboard"
+      - "dockge.note=Requires Ollama service to be running"
+
+volumes:
+  ollama_data:
+    name: ollama
+  open_webui_data:
+    name: open-webui

@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  stt-api:
+    image: ghcr.io/bmv234/stt-api-server:latest
+    restart: unless-stopped
+    ports:
+      - "8060:8060"  # Default port for STT API
+    volumes:
+      - stt_models:/app/models  # Persist downloaded models
+      - stt_cache:/app/cache    # Cache directory for processed audio
+    environment:
+      - CUDA_VISIBLE_DEVICES=0  # Enable GPU if available
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    labels:
+      - "dockge.description=Speech-to-Text API Server"
+      - "dockge.icon=headphones"
+      - "dockge.note=GPU-accelerated STT service"
+
+volumes:
+  stt_models:
+    name: stt-models
+  stt_cache:
+    name: stt-cache

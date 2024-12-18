@@ -26,20 +26,19 @@ docker compose up -d
 - Description: Self-hosted monitoring tool
 - Usage: Access `http://localhost:3001` to set up monitoring
 
-### 3. Ollama Stack
-- Ollama:
-  - Port: 11434
-  - Description: Run AI models locally
-  - Usage: API endpoint for AI model interactions
+### 3. Ollama Service
+- Port: 11434
+- Description: Run AI models locally
+- Usage: API endpoint for AI model interactions
 
-- Open WebUI:
-  - Port: 3000
-  - Description: Web interface for Ollama
-  - Usage: Access `http://localhost:3000` to interact with AI models
-  - Note: Automatically connects to Ollama service
+### 4. Open WebUI with Ollama Support
+- Port: 3000
+- Description: Web interface for Ollama
+- Usage: Access `http://localhost:3000` to interact with AI models
+- Note: Requires Ollama service to be running
 
-### 4. Text-to-Speech API Server
-- Port: 8050
+### 5. Text-to-Speech API Server
+- External Port: 8050 (Internal: 8000)
 - Description: GPU-accelerated Text-to-Speech service
 - Features:
   - Persistent model storage
@@ -47,8 +46,8 @@ docker compose up -d
   - Audio generation caching
 - Usage: Access `http://localhost:8050` for TTS API endpoints
 
-### 5. Speech-to-Text API Server
-- Port: 8060
+### 6. Speech-to-Text API Server
+- External Port: 8060 (Internal: 8000)
 - Description: GPU-accelerated Speech-to-Text service
 - Features:
   - Persistent model storage
@@ -56,8 +55,8 @@ docker compose up -d
   - Audio processing cache
 - Usage: Access `http://localhost:8060` for STT API endpoints
 
-### 6. Translation API Server
-- Port: 8070
+### 7. Translation API Server
+- External Port: 8070 (Internal: 8000)
 - Description: GPU-accelerated Translation service
 - Features:
   - Persistent model storage
@@ -65,7 +64,7 @@ docker compose up -d
   - Translation caching
 - Usage: Access `http://localhost:8070` for Translation API endpoints
 
-### 7. PostgreSQL Database
+### 8. PostgreSQL Database
 - Port: 5432
 - Description: PostgreSQL database server
 - Default Credentials:
@@ -85,7 +84,9 @@ docker compose up -d
 │   │   └── compose.yaml
 │   ├── postgres-stack/
 │   │   └── compose.yaml
-│   ├── ollama-stack/
+│   ├── ollama-stack/     # Ollama service only
+│   │   └── compose.yaml
+│   ├── open-webui-stack/ # Separate Open WebUI service
 │   │   └── compose.yaml
 │   ├── tts-service-stack/
 │   │   └── compose.yaml

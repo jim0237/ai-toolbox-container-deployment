@@ -1,0 +1,44 @@
+# Docker data and volumes
+data/
+*.db
+*.db-shm
+*.db-wal
+
+# Environment variables
+.env
+.env.*
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs and temporary files
+*.log
+logs/
+tmp/
+temp/
+
+# Node modules (if any Node.js services are added)
+node_modules/
+
+# Python virtual environments (if any Python services are added)
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+
+# Build artifacts
+dist/
+build/

@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:cuda
+    restart: unless-stopped
+    ports:
+      - "3000:8080"
+    volumes:
+      - open_webui_data:/app/backend/data
+    environment:
+      - OLLAMA_BASE_URL=http://localhost:11434
+    labels:
+      - "dockge.description=Open WebUI - Web interface for Ollama"
+      - "dockge.icon=layout-dashboard"
+      - "dockge.note=Requires Ollama service to be running"
+
+volumes:
+  open_webui_data:
+    name: open-webui

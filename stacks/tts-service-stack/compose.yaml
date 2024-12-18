@@ -9,8 +9,6 @@ services:
     volumes:
       - tts_models:/app/models  # Persist downloaded models
       - tts_cache:/app/cache    # Cache directory for generated audio
-    environment:
-      - CUDA_VISIBLE_DEVICES=0  # Enable GPU if available
     deploy:
       resources:
         reservations:
@@ -18,13 +16,26 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
+    networks:
+      - monitoring
     labels:
       - "dockge.description=Text-to-Speech API Server"
       - "dockge.icon=mic"
       - "dockge.note=GPU-accelerated TTS service"
+      - "uptime-kuma.monitor=true"
+      - "uptime-kuma.monitor.name=TTS Service"
+      - "uptime-kuma.monitor.type=http"
+      - "uptime-kuma.monitor.url=http://tts-api:8000/health"
+      - "uptime-kuma.monitor.interval=30"
+      - "uptime-kuma.monitor.retryInterval=10"
 
 volumes:
   tts_models:
     name: tts-models
   tts_cache:
     name: tts-cache
+
+networks:
+  monitoring:
+    name: monitoring
+    external: true

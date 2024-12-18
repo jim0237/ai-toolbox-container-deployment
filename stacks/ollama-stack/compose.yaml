@@ -8,10 +8,23 @@ services:
       - "11434:11434"
     volumes:
       - ollama_data:/root/.ollama
+    networks:
+      - monitoring
     labels:
       - "dockge.description=Ollama - Run AI models locally"
       - "dockge.icon=cpu"
+      - "uptime-kuma.monitor=true"
+      - "uptime-kuma.monitor.name=Ollama Service"
+      - "uptime-kuma.monitor.type=http"
+      - "uptime-kuma.monitor.url=http://ollama:11434/api/health"
+      - "uptime-kuma.monitor.interval=30"
+      - "uptime-kuma.monitor.retryInterval=10"
 
 volumes:
   ollama_data:
     name: ollama
+
+networks:
+  monitoring:
+    name: monitoring
+    external: true

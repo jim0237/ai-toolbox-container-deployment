@@ -6,6 +6,8 @@ This directory contains container deployment configurations managed by Dockge, a
 
 1. Start Dockge:
 ```bash
+cd dockge
+docker compose up -d
 ```
 
 2. Access Dockge UI:
@@ -14,61 +16,58 @@ This directory contains container deployment configurations managed by Dockge, a
 
 ## Available Stacks
 
-### 1. Whoami Service
-- Port: 8082
-- Description: Simple service that displays container information
-- Usage: Access `http://localhost:8082` to see container details
-
-### 2. Uptime Kuma
-- Port: 3001
-- Description: Self-hosted monitoring tool
-- Usage: Access `http://localhost:3001` to set up monitoring
-
-### 3. Ollama Service
+### 1. Ollama Service
 - Port: 11434
 - Description: Run AI models locally
 - Usage: API endpoint for AI model interactions
+- Monitoring: Health checks at /api/health
 
-### 4. Open WebUI with Ollama Support
+### 2. Open WebUI for Ollama
 - Port: 3000
 - Description: Web interface for Ollama
 - Usage: Access `http://localhost:3000` to interact with AI models
 - Note: Requires Ollama service to be running
+- Monitoring: Health checks at /health
 
-### 5. Text-to-Speech API Server
+### 3. Text-to-Speech API Server
 - External Port: 8050 (Internal: 8000)
 - Description: GPU-accelerated Text-to-Speech service
 - Features:
   - Persistent model storage
   - GPU acceleration support
   - Audio generation caching
-- Usage: Access `https://localhost:8050` for TTS API endpoints
+- Usage: Access `http://localhost:8050` for TTS API endpoints
+- Monitoring: Health checks at /health
 
-### 6. Speech-to-Text API Server
+### 4. Speech-to-Text API Server
 - External Port: 8060 (Internal: 8000)
 - Description: GPU-accelerated Speech-to-Text service
 - Features:
   - Persistent model storage
   - GPU acceleration support
   - Audio processing cache
-- Usage: Access `https://localhost:8060` for STT API endpoints
+- Usage: Access `http://localhost:8060` for STT API endpoints
+- Monitoring: Health checks at /health
 
-### 7. Translation API Server
+### 5. Translation API Server
 - External Port: 8070 (Internal: 8000)
 - Description: GPU-accelerated Translation service
 - Features:
   - Persistent model storage
   - GPU acceleration support
   - Translation caching
-- Usage: Access `https://localhost:8070` for Translation API endpoints
+- Usage: Access `http://localhost:8070` for Translation API endpoints
+- Monitoring: Health checks at /health
 
-### 8. PostgreSQL Database
-- Port: 5432
-- Description: PostgreSQL database server
-- Default Credentials:
-  - Username: pguser
-  - Password: changeMe123
-  - Database: myapp
+### 6. Uptime Kuma
+- Port: 3001
+- Description: Self-hosted monitoring tool
+- Usage: Access `http://localhost:3001` to set up monitoring
+- Features:
+  - Automatic container discovery via Docker socket
+  - Health check monitoring for all services
+  - Customizable monitoring intervals
+  - Real-time alerts and notifications
 
 ## Directory Structure
 ```
@@ -76,12 +75,6 @@ This directory contains container deployment configurations managed by Dockge, a
 ├── dockge/                # Dockge manager configuration
 │   └── docker-compose.yml
 ├── stacks/                # Container stack configurations
-│   ├── whoami-stack/
-│   │   └── compose.yaml
-│   ├── uptime-kuma-stack/
-│   │   └── compose.yaml
-│   ├── postgres-stack/
-│   │   └── compose.yaml
 │   ├── ollama-stack/     # Ollama service only
 │   │   └── compose.yaml
 │   ├── open-webui-stack/ # Separate Open WebUI service
@@ -90,7 +83,9 @@ This directory contains container deployment configurations managed by Dockge, a
 │   │   └── compose.yaml
 │   ├── stt-service-stack/
 │   │   └── compose.yaml
-│   └── translate-service-stack/
+│   ├── translate-service-stack/
+│   │   └── compose.yaml
+│   └── uptime-kuma-stack/
 │       └── compose.yaml
 └── data/                  # Dockge data directory
 ```
@@ -109,6 +104,13 @@ This directory contains container deployment configurations managed by Dockge, a
      - "dockge.icon=icon-name"
      - "dockge.note=Additional notes"
    ```
+
+## Monitoring
+All services are automatically monitored by Uptime-Kuma using Docker labels:
+- Health checks are configured for each service
+- Default monitoring interval: 30 seconds
+- Retry interval: 10 seconds
+- Access the Uptime-Kuma dashboard at `http://localhost:3001` to view service status
 
 ## Security Notes
 - Change default passwords before deploying to production

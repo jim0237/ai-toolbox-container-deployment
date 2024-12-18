@@ -6,8 +6,6 @@ This directory contains container deployment configurations managed by Dockge, a
 
 1. Start Dockge:
 ```bash
-cd dockge
-docker compose up -d
 ```
 
 2. Access Dockge UI:
@@ -44,7 +42,7 @@ docker compose up -d
   - Persistent model storage
   - GPU acceleration support
   - Audio generation caching
-- Usage: Access `http://localhost:8050` for TTS API endpoints
+- Usage: Access `https://localhost:8050` for TTS API endpoints
 
 ### 6. Speech-to-Text API Server
 - External Port: 8060 (Internal: 8000)
@@ -53,7 +51,7 @@ docker compose up -d
   - Persistent model storage
   - GPU acceleration support
   - Audio processing cache
-- Usage: Access `http://localhost:8060` for STT API endpoints
+- Usage: Access `https://localhost:8060` for STT API endpoints
 
 ### 7. Translation API Server
 - External Port: 8070 (Internal: 8000)
@@ -62,7 +60,7 @@ docker compose up -d
   - Persistent model storage
   - GPU acceleration support
   - Translation caching
-- Usage: Access `http://localhost:8070` for Translation API endpoints
+- Usage: Access `https://localhost:8070` for Translation API endpoints
 
 ### 8. PostgreSQL Database
 - Port: 5432

@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  voice-llama:
+    image: ghcr.io/bmv234/voice-llama:latest
+    restart: unless-stopped
+    ports:
+      - "8080:8000"  # Following the pattern of other services, using a new port
+    labels:
+      - "dockge.description=Voice-enabled LLaMA chat interface"
+      - "dockge.icon=message-circle"
+      - "dockge.note=GPU-accelerated voice chat service"

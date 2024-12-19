@@ -59,7 +59,17 @@ docker compose up -d
 - Usage: Access `http://localhost:8070` for Translation API endpoints
 - Monitoring: Health checks at /health
 
-### 6. Uptime Kuma
+### 6. Voice LLaMA Service
+- External Port: 8080 (Internal: 8000)
+- Description: Voice-enabled LLaMA chat interface
+- Features:
+  - Persistent model storage
+  - GPU acceleration support
+  - Voice interaction cache
+- Usage: Access `http://localhost:8080` for voice chat interface
+- Monitoring: Health checks at /health
+
+### 7. Uptime Kuma
 - Port: 3001
 - Description: Self-hosted monitoring tool
 - Initial Setup:
@@ -72,6 +82,7 @@ docker compose up -d
      - TTS: `https://localhost:8050/health`
      - STT: `https://localhost:8060/health`
      - Translation: `https://localhost:8070/health`
+     - Voice LLaMA: `http://localhost:8080/health`
   4. Configure monitoring intervals (recommended: 30s)
   5. Set up notifications if desired
 - Features:
@@ -82,7 +93,7 @@ docker compose up -d
   - Telemetry disabled by default
   - Frame embedding enabled for dashboard integration
 
-### 7. Whoami Service
+### 8. Whoami Service
 - Port: 8082
 - Description: Simple test service that displays container information
 - Usage: Access `http://localhost:8082` to see container details
@@ -104,6 +115,8 @@ docker compose up -d
 │   ├── stt-service-stack/
 │   │   └── compose.yaml
 │   ├── translate-service-stack/
+│   │   └── compose.yaml
+│   ├── voice-llama-stack/
 │   │   └── compose.yaml
 │   ├── uptime-kuma-stack/
 │   │   └── compose.yaml

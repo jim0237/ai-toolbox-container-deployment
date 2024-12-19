@@ -56,6 +56,13 @@ SERVICES = [
         "interval": 30,
         "retryInterval": 10,
     },
+    {
+        "name": "Voice LLaMA Service",
+        "url": "http://localhost:8080/health",
+        "type": "http",
+        "interval": 30,
+        "retryInterval": 10,
+    },
 ]
 
 async def wait_for_uptime_kuma(api, max_retries=30, delay=2):

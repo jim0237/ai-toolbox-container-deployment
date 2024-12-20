@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   translate-api:
     image: ghcr.io/bmv234/translate-api-server:latest

@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   tts-api:
     image: ghcr.io/bmv234/tts-api-server:latest

@@ -1,12 +1,14 @@
 services:
   stt-api:
-    image: ghcr.io/bmv234/stt-api-server:latest
+    build:
+      context: ../../../STT-API-Server  # Path to your forked STT source
+      dockerfile: Dockerfile
     restart: unless-stopped
     ports:
-      - "8060:8000"  # External port 8060 mapped to internal port 8000
+      - "8060:8000"
     volumes:
-      - stt_models:/app/models  # Persist downloaded models
-      - stt_cache:/app/cache    # Cache directory for processed audio
+      - stt_models:/app/models
+      - stt_cache:/app/cache
     deploy:
       resources:
         reservations:
@@ -15,9 +17,9 @@ services:
               count: 1
               capabilities: [gpu]
     labels:
-      - "dockge.description=Speech-to-Text API Server"
+      - "dockge.description=Custom STT API Server (jim0237 fork)"
       - "dockge.icon=headphones"
-      - "dockge.note=GPU-accelerated STT service"
+      - "dockge.note=Development version with custom features"
 
 volumes:
   stt_models:

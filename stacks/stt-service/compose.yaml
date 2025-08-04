@@ -1,7 +1,7 @@
 services:
   stt-api:
     build:
-      context: ../../../STT-API-Server  # Path to your forked STT source
+      context: ../../../STT-API-Server
       dockerfile: Dockerfile
     restart: unless-stopped
     ports:
@@ -9,6 +9,7 @@ services:
     volumes:
       - stt_models:/app/models
       - stt_cache:/app/cache
+      - vnotes_data:/app/vnotes  # ADD THIS LINE
     deploy:
       resources:
         reservations:
@@ -26,3 +27,5 @@ volumes:
     name: stt-models
   stt_cache:
     name: stt-cache
+  vnotes_data:    # ADD THIS BLOCK
+    name: vnotes-data

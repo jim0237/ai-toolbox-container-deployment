@@ -1,7 +1,8 @@
 services:
   stt-api:
+    # Build from your forked source (complete independence from original)
     build:
-      context: ../../../STT-API-Server
+      context: ../../../STT-API-Server  # Path to your forked STT source
       dockerfile: Dockerfile
     restart: unless-stopped
     ports:
@@ -9,7 +10,7 @@ services:
     volumes:
       - stt_models:/app/models
       - stt_cache:/app/cache
-      - /home/agnes/voice-notes:/app/vnotes  # Changed to host mount
+      - /home/agnes/voice-notes:/app/vnotes  # Host mount for voice notes access/backup
     deploy:
       resources:
         reservations:
@@ -18,13 +19,12 @@ services:
               count: 1
               capabilities: [gpu]
     labels:
-      - "dockge.description=Custom STT API Server (jim0237 fork)"
+      - "dockge.description=Custom STT API Server (jim0237 independent fork)"
       - "dockge.icon=headphones"
-      - "dockge.note=Development version with custom features"
+      - "dockge.note=Fully independent - modular frontend, multi-user support"
 
 volumes:
   stt_models:
     name: stt-models
   stt_cache:
     name: stt-cache
-  # vnotes_data removed - using host mount instead
